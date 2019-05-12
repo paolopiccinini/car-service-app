@@ -26,9 +26,14 @@ export default Controller.extend({
 
             newCar.save().then(() => this.transitionToRoute('cars'));
         },
-
         bindDate(date) {
-            car.firstRegistration = date.toISOString().split('T')[0];
+            let month = '' + (date.getMonth() + 1);
+            let day = '' + date.getDate();
+            let year = date.getFullYear();
+
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day = '0' + day;
+            car.firstRegistration = [year, month, day].join('-');
             return date;
         }
     }

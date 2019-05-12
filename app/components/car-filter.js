@@ -29,7 +29,7 @@ export default Component.extend({
     syncFilter(filterCars) {
         if (filterCars.query.title === this.title && filterCars.query.priceFrom === this.priceFrom
             && filterCars.query.priceTo === this.priceTo && filterCars.query.newCar === this.newCar) {
-            this.set('cars', filterCars.cars)
+            this.set('cars', filterCars.cars);
         }
     }
 });

@@ -4,40 +4,37 @@ export default Controller.extend({
     firstRegistration: null,
     actions: {
         updateCar(car) {
-            let registration = this.firstRegistration;
-            this.store.findRecord('car', car.id).then(function (updated) {
-                updated.set('title', car.title);
-                updated.set('fuel', car.fuel);
-                updated.set('price', car.price);
-                updated.set('newCar', car.newCar);
-                if (car.newCar) {
-                    updated.set('mileage', null);
-                    updated.set('firstRegistration', null);
-                } else {
-                    updated.set('mileage', car.mileage);
-                    updated.set('firstRegistration', (registration === null) ? car.firstRegistration : registration);
-                }
-                updated.save();
-            });
+            car.set('firstRegistration', (this.firstRegistration === null) ? car.firstRegistration : this.firstRegistration);
+            if(car.newCar) {
+                car.set('mileage', null);
+                car.set('firstRegistration', null);
+            }
+            car.save();
         },
         deleteCar(car) {
+            car.destroyRecord()
             // i don't know why this is not working, i've put everything  here.
             // it's like the doc says. When i moved to component this stops working
-            // i don't know how to fix this, sorry i've to reload the page
+            // i don't know how to fix this, sorry i've to reload the page for now  
             // https://guides.emberjs.com/release/models/creating-updating-and-deleting-records/#toc_deleting-records
-            this.store.findRecord('car', car.id, { backgroundReload: false }).then((returedCar) => {
-                returedCar.deleteRecord();
-                returedCar.get('isDeleted');
-                returedCar.save();
-                window.location.reload(true); // decomment me to see the error in console the model won't update
-            });
+            window.location.reload(true);
+            // .then(() => {
+            //    this.transitionToRoute('/');
+            // });
         },
         bindDate(date) {
-            this.firstRegistration = date.toISOString().split('T')[0];
+            let month = '' + (date.getMonth() + 1);
+            let day = '' + date.getDate();
+            let year = date.getFullYear();
+
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day = '0' + day;
+            this.firstRegistration = [year, month, day].join('-');
             return date;
         },
         filter(title, priceFrom, priceTo, newCar) {
-            return this.store.findAll('car').then(cars => {
+            return this.store.findAll('car')
+            .then(cars => {
                 let carFiltered = cars.filter(car => {
                     let result = true;
                     if (title && title !== '') {

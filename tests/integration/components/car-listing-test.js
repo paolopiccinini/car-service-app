@@ -5,22 +5,31 @@ import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | car-listing', function(hooks) {
   setupRenderingTest(hooks);
+  hooks.beforeEach(function () {
+    this.car = {
+      title: 'Audi',
+      price: 13,
+      fuel: 'diesel',
+      newCar: false,
+      mileage: 13,
+      firstRegistration: '2019-10-04'
+    };
+    this.updateCar = function(car) {
+      alert(car);
+    };
+    this.deleteCar = function(car) {
+      alert(car);
+    };
+    this.bindDate = function(date) {
+      alert(date);
+    };
 
-  test('it renders', async function(assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
-
-    await render(hbs`{{car-listing}}`);
-
-    assert.equal(this.element.textContent.trim(), '');
-
-    // Template block usage:
-    await render(hbs`
-      {{#car-listing}}
-        template block text
-      {{/car-listing}}
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
   });
+
+  test('should display car details', async function(assert) {
+    await render(hbs`<CarListing @car={{this.car}} @updateCar={{action this.updateCar}} @deleteCar={{action this.deleteCar}}
+      @bindDate={{action this.bindDate}}/>`);
+      assert.equal(this.element.querySelector('.title input').value.trim(), 'Audi', 'Title: Audi');
+  });
+
 });
