@@ -1,0 +1,36 @@
+<article class="listing">
+  <div class="details">
+    <div class="detail title">
+      <label >Title</label>
+      {{input type="text" value=this.car.title }}
+    </div>
+    <div class="detail fuel">
+      <label >Fuel</label>
+      {{input type="text" value=this.car.fuel}}
+    </div>
+    <div class="detail price">
+      <label >Price</label>
+      {{input type="number" value=this.car.price}}
+    </div>
+    <div class="detail newCar">
+      <label >New Car</label>
+      {{input type="checkbox" checked=this.car.newCar}}
+    </div>
+    {{#unless this.car.newCar }}
+      <div class="detail mileage">
+        <label>Mileage</label>
+        {{input type="number" value=this.car.mileage}}
+      </div>
+      <div class="detail firstRegistration">
+        <label>Date</label>
+        {{pikaday-input  value=this.car.firstRegistration onSelection=(action "handleBindDate") format="YYYY-MM-DD"}}
+      </div>
+    {{/unless}}
+    <div class="detail action">
+      <button class="button ember-view" {{ action "handleUpdateCar" car}}>update</button>
+    </div>
+    <div class="detail action">
+      <button class="button ember-view" {{ action "handleDeleteCar" car}}>delete</button>
+    </div>
+  </div>
+</article>

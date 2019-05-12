@@ -1,0 +1,28 @@
+<label>Title</label>
+{{input
+  value=title
+  key-up=(action "handleFilter")
+  class="light"
+}}
+<label>Price from</label>
+{{input
+  value=priceFrom
+  key-up=(action "handleFilter")
+  class="light"
+  type="number"
+}}
+<label>Price to</label>
+{{input
+  value=priceTo
+  keyUp=(action "handleFilter")
+  class="light"
+  type="number"
+}}
+<label>New Car</label>
+{{input
+  mouseUp=(action "handleFilterCheck")
+  class="light"
+  type="checkbox"
+}}
+<button class="button ember-view" {{ action "resetFilters"}}>Reset</button>
+{{yield this.cars}}

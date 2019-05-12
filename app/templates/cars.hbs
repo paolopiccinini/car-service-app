@@ -1,0 +1,16 @@
+{{#link-to "new" class="button"}}
+  new car
+{{/link-to}}
+<br>
+<br>
+<CarFilter @filter={{action "filter"}} as |filteredCars|>
+  <ul class="results">
+    {{#each filteredCars as |carUnit|}}
+      <li>
+        <CarListing @car={{carUnit}} @updateCar={{action "updateCar"}} @deleteCar={{action "deleteCar"}}
+          @bindDate={{action "bindDate"}} />
+      </li>
+    {{/each}}
+  </ul>
+</CarFilter>
+{{outlet}}
