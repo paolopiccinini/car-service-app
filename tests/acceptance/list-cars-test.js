@@ -22,6 +22,6 @@ module('Acceptance | list cars', function(hooks) {
 
   test('should list available cars.', async function(assert) {
     await visit('/');
-    assert.equal(this.element.querySelectorAll('.listing').length, 8, 'should display 3 listings');
+    assert.equal(this.element.querySelectorAll('.listing').length, 5, 'should display 3 listings');
   });
 });

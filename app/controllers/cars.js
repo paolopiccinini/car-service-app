@@ -13,14 +13,7 @@ export default Controller.extend({
         },
         deleteCar(car) {
             car.destroyRecord()
-            // i don't know why this is not working, i've put everything  here.
-            // it's like the doc says. When i moved to component this stops working
-            // i don't know how to fix this, sorry i've to reload the page for now  
-            // https://guides.emberjs.com/release/models/creating-updating-and-deleting-records/#toc_deleting-records
             window.location.reload(true);
-            // .then(() => {
-            //    this.transitionToRoute('/');
-            // });
         },
         bindDate(date) {
             let month = '' + (date.getMonth() + 1);
@@ -50,7 +43,7 @@ export default Controller.extend({
                         result = result && car.newCar === newCar;
                     }
                     return result;
-                })
+                });
                 return {
                     query: {
                         title: title,

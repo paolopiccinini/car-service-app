@@ -1,27 +1,49 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-// import { render } from '@ember/test-helpers';
-// import hbs from 'htmlbars-inline-precompile';
+import { render } from '@ember/test-helpers';
+import hbs from 'htmlbars-inline-precompile';
+
+const ITEMS = [{
+  title: 'Audi',
+  price: 13,
+  fuel: 'diesel',
+  newCar: false,
+  mileage: 13,
+  firstRegistration: '2019-10-04'
+},{
+  title: 'Audi',
+  price: 13,
+  fuel: 'diesel',
+  newCar: false,
+  mileage: 13,
+  firstRegistration: '2019-10-04'
+},{
+  title: 'Audi',
+  price: 13,
+  fuel: 'diesel',
+  newCar: false,
+  mileage: 13,
+  firstRegistration: '2019-10-04'
+}];
 
 module('Integration | Component | car-filter', function(hooks) {
   setupRenderingTest(hooks);
-  hooks.beforeEach(function () {
-    this.cars = [{
-      title: 'Audi',
-      price: 13,
-      fuel: 'diesel',
-      newCar: false,
-      mileage: 13,
-      firstRegistration: '2019-10-04'
-    }];
-    this.filter = function () {
-      return this.cars;
-    }
-  });
 
-  test('should display car details', async function(assert) {
-    // await render(hbs`<CarFilter @filter={{action this.filter}} as |filteredCars|></CarFilter>`);
-      assert.equal(true, true, 'Title: Audi');
+  test('should initially load all listings', async function (assert) {
+    this.set('filter', () => Promise.resolve({ cars: ITEMS }));
+    await render(hbs`
+      <CarFilter @filter={{action filter}} as |cars|>
+        <ul>
+        {{#each cars as |item|}}
+          <li class="city">
+            {{item.title}}
+          </li>
+        {{/each}}
+        </ul>
+      </CarFilter>
+    `);
+    assert.equal(this.element.querySelectorAll('.city').length, 3);
+    // assert.equal(this.element.querySelector('.city').textContent.trim(), 'Audi');
   });
 
 });
